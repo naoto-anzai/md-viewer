@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "props": {},
+  "states": [
+    { "key": "compact", "label": "コンパクト表示", "kind": "switch", "default": false }
+  ]
+}
