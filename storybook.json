@@ -2,6 +2,20 @@
   "version": 1,
   "props": {},
   "states": [
+    {
+      "key": "doc",
+      "label": "文書サンプル",
+      "kind": "radio",
+      "options": [
+        { "value": "sample", "label": "基本(見出し・リスト・リンク・画像)" },
+        { "value": "table", "label": "表" },
+        { "value": "code", "label": "コードブロック" },
+        { "value": "long", "label": "長文(スクロール)" },
+        { "value": "empty", "label": "空" },
+        { "value": "error", "label": "エラー" }
+      ],
+      "default": "sample"
+    },
     { "key": "compact", "label": "コンパクト表示", "kind": "switch", "default": false }
   ]
 }

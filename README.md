@@ -10,6 +10,11 @@ Markdown を Herdr のペインで表示する Mod。ファイルを props で�
 
 (mods-watcher を使わないなら `ln -s` で `~/.config/herdr-app/mods/md-viewer` に張る。ホットリロードは効かない。)
 
-## 状態
+## 使い方
 
-雛形のみ。実装はこれから。
+    herdr-app do pane.split '{"direction":"right","mod":"md-viewer","props":{"file":"/abs/path/to/file.md"}}'
+
+- `TextView.markdown` で描画(表・コードブロック・長い行は確認済み)。
+- 表示中ファイルのフォルダを `watchFolder` で監視し、変更に追従する。
+- 相対の `.md` リンクはペイン内で開き、`←` で戻る。http(s) は `open` で外部ブラウザへ。
+- 画像(相対パス)は表示されない。未対応。
