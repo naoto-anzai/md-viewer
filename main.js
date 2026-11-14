@@ -19,6 +19,7 @@ const MAX = 400000;
 export default class extends View {
   init() {
     this.file = props()?.file ?? null;
+    this.on = props()?.on ?? null; // リモート machine 名(この computer なら null)
     this.history = [];
     this.text = null;
     this.error = null;
@@ -32,7 +33,7 @@ export default class extends View {
     if (!file) { this.text = null; this.error = "props.file が指定されていません"; return; }
     cx.spawn(async (cx) => {
       try {
-        const t = await readTextFile(file);
+        const t = await readTextFile(file, { on: this.on });
         if (this.file !== file) return;
         if (t === null) { this.text = null; this.error = "ファイルが見つかりません"; }
         else if (t.includes("\0")) { this.text = null; this.error = "バイナリファイルは表示できません"; }
@@ -43,10 +44,23 @@ export default class extends View {
     this.watch(dirname(file), cx);
   }
 
+  // リモートでは watchFolder が使えないので、10 秒ごとに読み直す(Files と同じ方式)。
+  poll(token, cx) {
+    cx.spawn(async (cx) => {
+      while (this.watching === token) {
+        try { await exec("sleep", ["10"]); } catch { return; }
+        if (this.watching !== token) return;
+        this.load(cx);
+      }
+    });
+  }
+
   // 表示中ファイルのフォルダを監視し、変更があれば読み直す。
   watch(dir, cx) {
-    if (this.watching === dir) return;
-    const token = (this.watching = dir);
+    const token = `${this.on ?? ""}:${dir}`;
+    if (this.watching === token) return;
+    this.watching = token;
+    if (this.on) return this.poll(token, cx);
     cx.spawn(async (cx) => {
       while (this.watching === token) {
         try { await watchFolder(dir); } catch { return; }
@@ -77,7 +91,7 @@ export default class extends View {
     const path = decodeURIComponent(url.replace(/^file:\/\//, "").split("#")[0]);
     const target = resolve(dirname(this.file), path);
     if (/\.(md|markdown)$/i.test(target)) this.open(target, cx);
-    else exec("open", [target]);
+    else if (!this.on) exec("open", [target]);
   }
 
   render(cx) {
