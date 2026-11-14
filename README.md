@@ -16,6 +16,12 @@ Markdown を Herdr のペインで表示する Mod。ファイルを props で�
 
 - `TextView.markdown` で描画(表・コードブロック・長い行は確認済み)。
 - 表示中ファイルのフォルダを `watchFolder` で監視し、変更に追従する。
-- 相対の `.md` リンクはペイン内で開き、`←` で戻る。http(s) は `open` で外部ブラウザへ。
+- ペイン内にタブが並ぶ(VSCode 風)。相対の `.md` リンクは新しいタブで開き、× でタブを閉じる。http(s) は `open` で外部ブラウザへ。
 - リモート: props に `on`(machine 名)を足すと、その machine のファイルを読む。変更追従は 10 秒ごとの再読み込み。
 - 画像(相対パス)は表示されない。未対応。
+
+## Files との連携(`files-md`)
+
+Files(`mod.clone` したもの)から `.md` を選ぶと、同じ herdr の tab に md-viewer があればそのタブへ追加し、なければ分割して作る。
+`props.viewer`(Files が付ける ID)と shared(`md-viewer:pane:<pane>` / `md-viewer:open:<viewer>` / `md-viewer:pending`)でペインを特定する。
+`run("pane.split")` は新しいペインの ID を返さないため、分割の前後で増えた md-viewer ペインを結び付けている。

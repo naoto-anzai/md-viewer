@@ -7,15 +7,54 @@
       "label": "文書サンプル",
       "kind": "radio",
       "options": [
-        { "value": "sample", "label": "基本(見出し・リスト・リンク・画像)" },
-        { "value": "table", "label": "表" },
-        { "value": "code", "label": "コードブロック" },
-        { "value": "long", "label": "長文(スクロール)" },
-        { "value": "empty", "label": "空" },
-        { "value": "error", "label": "エラー" }
+        {
+          "value": "sample",
+          "label": "基本(見出し・リスト・リンク・画像)"
+        },
+        {
+          "value": "table",
+          "label": "表"
+        },
+        {
+          "value": "code",
+          "label": "コードブロック"
+        },
+        {
+          "value": "long",
+          "label": "長文(スクロール)"
+        },
+        {
+          "value": "empty",
+          "label": "空"
+        },
+        {
+          "value": "error",
+          "label": "エラー"
+        }
       ],
       "default": "sample"
     },
-    { "key": "compact", "label": "コンパクト表示", "kind": "switch", "default": false }
+    {
+      "key": "tabs",
+      "label": "タブ",
+      "kind": "radio",
+      "options": [
+        {
+          "value": "one",
+          "label": "1 つ"
+        },
+        {
+          "value": "many",
+          "label": "複数(長い名前を含む)"
+        }
+      ],
+      "default": "one"
+    },
+    {
+      "key": "compact",
+      "label": "コンパクト表示",
+      "kind": "switch",
+      "default": false
+    }
   ]
 }
